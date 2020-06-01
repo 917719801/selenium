@@ -22,15 +22,14 @@ public class TestSelenium {
     public void testSelenium() throws InterruptedException {
         //复用浏览器
         ChromeOptions options = new ChromeOptions();
-        options.setExperimentalOption("debuggerAddress", "127.0.0.1:9222");
+        options.setExperimentalOption("debuggerAddress", "127.0.0.1:9333");
         driver = new ChromeDriver();
         driver.get("https://work.weixin.qq.com/wework_admin/frame");
         //获取cookie
-        //driver.manage().getCookies();
+        driver.manage().getCookies();
         //打印获取的cookie
-        //System.out.println(driver.manage().getCookies());
-        driver.get("https://work.weixin.qq.com/wework_admin/frame");
-        Thread.sleep(5000);
+        System.out.println(driver.manage().getCookies());
+        //driver.get("https://work.weixin.qq.com/wework_admin/frame");
     }
 
     public void loadCookie() {
@@ -93,4 +92,5 @@ public class TestSelenium {
 
 
 }
+
 
