@@ -1,4 +1,7 @@
 package testcase;
+/*
+企业微信使用cookie实现免登录后添加人员
+ */
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;

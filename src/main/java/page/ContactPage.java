@@ -1,4 +1,8 @@
 package page;
+/*
+添加企业微信添加成员操作
+ */
+
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;

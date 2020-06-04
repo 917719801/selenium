@@ -1,4 +1,8 @@
 package page;
+/*
+使用cookie登录企业微信，
+cookie可以使用复用浏览器获取（未实现）
+ */
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
