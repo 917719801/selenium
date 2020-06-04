@@ -1,4 +1,8 @@
 package page;
+/*
+使用cookie登录企业微信，
+cookie可以使用复用浏览器获取（未实现）
+ */
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
@@ -6,6 +10,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -14,14 +19,13 @@ import java.util.Locale;
 import java.util.StringTokenizer;
 import java.util.concurrent.TimeUnit;
 
-public class MainPage {
-    public  static WebDriver driver;
+public class MainPage extends BasePage {
 
     public MainPage() {
         String url = "https://work.weixin.qq.com/wework_admin/frame";
         driver = new ChromeDriver();
         //隐式等待5秒
-        driver.manage().timeouts().implicitlyWait(5,TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.get(url);
         driver.manage().deleteAllCookies();
 
@@ -50,7 +54,8 @@ public class MainPage {
     public ContactPage toContact() {
 
         driver.findElement(By.cssSelector("#menu_contacts")).click();
-        return new ContactPage();
+        return new ContactPage(driver);
 
     }
+
 }
