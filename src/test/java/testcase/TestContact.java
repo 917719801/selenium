@@ -10,6 +10,8 @@ import org.openqa.selenium.WebDriver;
 import page.ContactPage;
 import page.MainPage;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class TestContact {
     static MainPage main;
     static ContactPage contact;
@@ -23,14 +25,21 @@ public class TestContact {
     @Test
     void testAddMember() {
 
-        main.toContact().addMember("3", "3", "18829781053");
+        String username=contact.addMember("3", "3", "18829781053").search("3").getUserName();
+        assertEquals(username,"3");
 
     }
 
     @Test
-    void test1search() {
+    void testSearch() {
 
         contact.search("3").delete();
+
+
+    }
+    @Test
+    void testImportFile(){
+        contact.importFile(this.getClass().getResource("/通讯录批量导入模板.xlsx"));
 
     }
 

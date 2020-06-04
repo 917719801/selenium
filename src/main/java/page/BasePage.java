@@ -47,5 +47,10 @@ public class BasePage {
         driver.findElement(by).sendKeys(content);
 
     }
+    public  void  upload(By by,String path){
+        wait.until(ExpectedConditions.presenceOfElementLocated(by));
+        driver.findElement(by).sendKeys(path);
+
+    }
 
 }
