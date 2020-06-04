@@ -23,7 +23,14 @@ public class TestContact {
     @Test
     void testAddMember() {
 
-        main.toContact().addMember("3", "3", "15609223996");
+        main.toContact().addMember("3", "3", "18829781053");
+
+    }
+
+    @Test
+    void test1search() {
+
+        contact.search("3").delete();
 
     }
 
