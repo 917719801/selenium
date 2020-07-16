@@ -1,4 +1,4 @@
-package page;
+package webwework.page;
 /*
 实现添加、删除成员
  */
@@ -6,6 +6,7 @@ package page;
 import org.openqa.selenium.By;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLDecoder;
@@ -86,15 +87,15 @@ public class ContactPage extends BasePage {
 
     //导入文件
     public ContactPage importFile(URL path) {
-        System.out.println(path.getPath());
+        //System.out.println(path.getPath());
         String path_utf = "";
         try {
             path_utf = URLDecoder.decode(path.getFile(), "UTF-8");
-            System.out.println(path_utf);
+            //System.out.println(path_utf);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-
+        File file = new File(path_utf);
         click(By.cssSelector(".ww_operationBar:nth-child(1) .ww_btn_PartDropdown_left"));
         click(By.linkText("文件导入"));
         upload(By.name("file"),path_utf);

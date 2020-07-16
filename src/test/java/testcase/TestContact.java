@@ -6,9 +6,11 @@ package testcase;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.WebDriver;
-import page.ContactPage;
-import page.MainPage;
+import webwework.page.ContactPage;
+import webwework.page.MainPage;
+
+import java.io.File;
+import java.net.URL;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -39,7 +41,8 @@ public class TestContact {
     }
     @Test
     void testImportFile(){
-        contact.importFile(this.getClass().getResource("/通讯录批量导入模板.xlsx"));
+
+        contact.importFile(this.getClass().getResource("通讯录批量导入模板.xlsx"));
 
     }
 

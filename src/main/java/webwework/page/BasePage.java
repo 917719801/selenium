@@ -1,4 +1,4 @@
-package page;
+package webwework.page;
 /*
 将公共方法提取
  */
