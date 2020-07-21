@@ -8,6 +8,8 @@ import org.junit.platform.commons.logging.Logger;
 import org.junit.platform.commons.logging.LoggerFactory;
 
 import static io.restassured.RestAssured.given;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 /*
 部门相关接口测试
  */
@@ -39,7 +41,7 @@ public class DemoTest01 {
                 "   \"order\": 1,\n" +
                 "   \"id\": 2\n" +
                 "}";
-        Response response = given()
+        Response creatresponse = given()
                 .when()
                 .contentType("application/json")
                 .body(creatbody)
@@ -48,6 +50,7 @@ public class DemoTest01 {
                 .log().body()
                 .extract()
                 .response();
+        assertEquals("0",creatresponse.path("errcode").toString());
     }
     @Test
     @Description("更新部门")
@@ -68,7 +71,11 @@ public class DemoTest01 {
                 .log().body()
                 .extract()
                 .response();
+        assertEquals("0",updateResponse.path("errcode").toString());
     }
+
+
+
     @Test
     @Description("查询部门")
     void listDepartment() {
@@ -82,6 +89,7 @@ public class DemoTest01 {
                 .log().body()
                 .extract()
                 .response();
+        assertEquals("0",listResponse.path("errcode").toString());
     }
     @Test
     @Description("删除部门")
@@ -96,6 +104,7 @@ public class DemoTest01 {
                 .log().body()
                 .extract()
                 .response();
+        assertEquals("0",deletResponse.path("errcode").toString());
     }
 
 }
