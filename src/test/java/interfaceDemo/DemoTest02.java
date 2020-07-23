@@ -158,7 +158,7 @@ public class DemoTest02 {
                 .param("access_token", accessToken)
                 .param("id", deparmentid)
                 .contentType("application/json")
-                .get("https://qyapi.weixin.qq.com/cgi-bin/department/list")
+                .get("https://qyapi.weixin.qq.com/cgi-bin/department/delete")
                 .then()
                 .log().body()
                 .extract()
