@@ -1,6 +1,7 @@
 package apiobject;
 
 import io.restassured.response.Response;
+import org.junit.jupiter.api.RepeatedTest;
 import wecht.FakeUtils;
 
 import static io.restassured.RestAssured.given;
@@ -49,5 +50,34 @@ public class DepartmentApiobject {
                 .extract()
                 .response();
         return updateResponse;
+    }
+
+    public static Response listDepartment(String deparmentid, String accessToken) {
+        Response listResponse = given()
+                .when()
+                .param("access_token", accessToken)
+                .param("id", deparmentid)
+                .contentType("application/json")
+                .get("https://qyapi.weixin.qq.com/cgi-bin/department/list")
+                .then()
+                .log().body()
+                .extract()
+                .response();
+        return listResponse;
+    }
+
+    public static Response deleteDepartment(String deparmentid, String accessToken) {
+        Response deletResponse = given()
+                .when()
+                .param("access_token", accessToken)
+                .param("id", deparmentid)
+                .contentType("application/json")
+                .get("https://qyapi.weixin.qq.com/cgi-bin/department/delete")
+                .then()
+                .log().body()
+                .extract()
+                .response();
+        return deletResponse;
+
     }
 }

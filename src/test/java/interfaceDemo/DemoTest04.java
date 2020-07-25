@@ -135,17 +135,7 @@ public class DemoTest04 {
     void listDepartment() {
         Response creatresponse = DepartmentApiobject.cratDepartment(accessToken);
         deparmentid = creatresponse.path("id") != null ? creatresponse.path("id").toString() : null;
-
-        Response listResponse = given()
-                .when()
-                .param("access_token", accessToken)
-                .param("id", deparmentid)
-                .contentType("application/json")
-                .get("https://qyapi.weixin.qq.com/cgi-bin/department/list")
-                .then()
-                .log().body()
-                .extract()
-                .response();
+        Response listResponse = DepartmentApiobject.listDepartment(deparmentid, accessToken);
         assertEquals("0", listResponse.path("errcode").toString());
     }
 
@@ -155,16 +145,7 @@ public class DemoTest04 {
     void deletDepartment() {
         Response creatresponse = DepartmentApiobject.cratDepartment(accessToken);
         deparmentid = creatresponse.path("id") != null ? creatresponse.path("id").toString() : null;
-        Response deletResponse = given()
-                .when()
-                .param("access_token", accessToken)
-                .param("id", deparmentid)
-                .contentType("application/json")
-                .get("https://qyapi.weixin.qq.com/cgi-bin/department/delete")
-                .then()
-                .log().body()
-                .extract()
-                .response();
+        Response deletResponse = DepartmentApiobject.deleteDepartment(deparmentid, accessToken);
         assertEquals("0", deletResponse.path("errcode").toString());
     }
 

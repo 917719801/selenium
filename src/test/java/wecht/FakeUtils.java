@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 public class FakeUtils {
     private static  final Logger logger = LoggerFactory.getLogger(FakeUtils.class);
     public static  String  gettimeStamp(){
-        System.out.println(String.valueOf(System.currentTimeMillis()));
         return  String.valueOf(System.currentTimeMillis());
 
     }
