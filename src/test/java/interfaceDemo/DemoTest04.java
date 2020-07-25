@@ -1,9 +1,11 @@
 package interfaceDemo;
 
 import apiobject.DepartmentApiobject;
+import apiobject.TokenHelper;
 import com.sun.org.glassfish.gmbal.Description;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.*;
+import task.evnTask;
 import wecht.FakeUtils;
 
 import java.util.ArrayList;
@@ -16,7 +18,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 1.增加了入参实时获取的逻辑
 2.增加了脚本的独立性改造
 3.使用时间戳命名法避免数据重复
-
+4.通过添加evnclear方法解决脚本无法重复运行的问题
+5.对脚本进行了分层，减少了重复代码，减少了维护成本
  */
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)//添加用例执行顺序
@@ -26,82 +29,13 @@ public class DemoTest04 {
 
     @BeforeAll
     public static void getaccessToken() {
-
-        accessToken = given()
-                .when()
-                .param("corpid", "wwa3df01c934fd5733")
-                .param("corpsecret", "bioYbELS1UUYa07kxy-9xMDGS3Ejc1U0L7JIyEyGYCs")
-                .get("https://qyapi.weixin.qq.com/cgi-bin/gettoken")
-                .then()
-                .log().body()
-                .extract()
-                .response()
-                .path("access_token");
+        accessToken = TokenHelper.getAccesstoken();
     }
 
     @BeforeEach
-    void evnClear() {
-        Response listResponse = given()
-                .when()
-                .param("access_token", accessToken)
-                .param("id", deparmentid)
-                .contentType("application/json")
-                .get("https://qyapi.weixin.qq.com/cgi-bin/department/list")
-                .then()
-                .log().body()
-                .extract()
-                .response();
-        ArrayList<Integer> departmentidList = listResponse.path("department.id");
-
-        for (int departmentid : departmentidList) {
-            if (1 == departmentid) {
-                continue;
-            }
-            Response deletResponse = given()
-                    .when()
-                    .param("access_token", accessToken)
-                    .param("id", departmentid)
-                    .contentType("application/json")
-                    .get("https://qyapi.weixin.qq.com/cgi-bin/department/delete")
-                    .then()
-                    .log().body()
-                    .extract()
-                    .response();
-
-        }
-
-    }
-
     @AfterEach
-    void endClear() {
-        Response listResponse = given()
-                .when()
-                .param("access_token", accessToken)
-                .param("id", deparmentid)
-                .contentType("application/json")
-                .get("https://qyapi.weixin.qq.com/cgi-bin/department/list")
-                .then()
-                .log().body()
-                .extract()
-                .response();
-        ArrayList<Integer> departmentidList = listResponse.path("department.id");
-
-        for (int departmentid : departmentidList) {
-            if (1 == departmentid) {
-                continue;
-            }
-            Response deletResponse = given()
-                    .when()
-                    .param("access_token", accessToken)
-                    .param("id", departmentid)
-                    .contentType("application/json")
-                    .get("https://qyapi.weixin.qq.com/cgi-bin/department/delete")
-                    .then()
-                    .log().body()
-                    .extract()
-                    .response();
-
-        }
+    void evnClear() {
+        evnTask.evnClear(accessToken);
 
     }
 
