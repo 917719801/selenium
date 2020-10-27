@@ -27,10 +27,10 @@ public class Selenium_API {
 
     @BeforeAll
     public static void initData() {
-        System.setProperty("webdriver.chrome.driver", "D:\\webdriver\\chromedriver.exe");
-        driver = new ChromeDriver();
-//        System.setProperty("webdriver.gecko.driver", "D:\\WebDriver\\geckodriver.exe");
-//        driver = new FirefoxDriver();
+//        System.setProperty("webdriver.chrome.driver", "D:\\webdriver\\chromedriver.exe");
+//        driver = new ChromeDriver();
+        System.setProperty("webdriver.gecko.driver", "D:\\WebDriver\\geckodriver.exe");
+        driver = new FirefoxDriver();
 
         driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
     }
@@ -162,12 +162,24 @@ public class Selenium_API {
     }
     @Test
     void operateDropList(){
-        driver.get("D:\\ideaworkspace\\selenium\\bin\\droplist.html");
-        Select dropList=new Select(driver.findElement(By.id("fruit")));
+        driver.get("E:\\ideawork\\selenium\\bin\\droplist.html");
+        //使用name属性找到页面上name属性为fruit的下拉列表元素
+        Select dropList=new Select(driver.findElement(By.name("fruit")));
+        //ismultiple标识下拉列表是否允许多选，被页面是一个单选下拉列表，所以此函数返回结果实false
         Assert.assertFalse(dropList.isMultiple());
+        //getFirstSelectedOption().getText()方法表示获取当前被选中的下拉列表选项文本
+        //断言当前选中的选项文本是否是桃子
         Assert.assertEquals("桃子",dropList.getFirstSelectedOption().getText());
+        //selectByIndex方法表示选中下拉列表的第四个选项，即猕猴桃选项
+
         dropList.selectByIndex(3);
         Assert.assertEquals("猕猴桃",dropList.getFirstSelectedOption().getText());
+//        //selectByValue方法表示使用下拉列表选项的value属性进行操作，“shanzha"是选项的属性值
+        dropList.selectByValue("shanzha");
+        Assert.assertEquals("山楂",dropList.getFirstSelectedOption().getText());
+        //selectByVisibleText方法表示通过选项的文字进行选中
+        dropList.selectByVisibleText("荔枝");
+        Assert.assertEquals("荔枝",dropList.getFirstSelectedOption().getText());
 
     }
 
