@@ -8,16 +8,16 @@ import org.junit.Assert;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.Point;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class Selenium_API {
@@ -171,15 +171,32 @@ public class Selenium_API {
         //断言当前选中的选项文本是否是桃子
         Assert.assertEquals("桃子",dropList.getFirstSelectedOption().getText());
         //selectByIndex方法表示选中下拉列表的第四个选项，即猕猴桃选项
-
         dropList.selectByIndex(3);
         Assert.assertEquals("猕猴桃",dropList.getFirstSelectedOption().getText());
-//        //selectByValue方法表示使用下拉列表选项的value属性进行操作，“shanzha"是选项的属性值
+       //selectByValue方法表示使用下拉列表选项的value属性进行操作，“shanzha"是选项的属性值
         dropList.selectByValue("shanzha");
         Assert.assertEquals("山楂",dropList.getFirstSelectedOption().getText());
         //selectByVisibleText方法表示通过选项的文字进行选中
         dropList.selectByVisibleText("荔枝");
         Assert.assertEquals("荔枝",dropList.getFirstSelectedOption().getText());
+
+    }
+    @Test
+    void checkSelectText(){
+        driver.get("E:\\ideawork\\selenium\\bin\\droplist.html");
+        Select dropList=new Select(driver.findElement(By.name("fruit")));
+        //声明一个list对象存储下拉列表中有期望出现的选项文字，并通过泛型<String>限定list
+        //对象中的存储对象类型是String，Arrays。asList表示将一个数组转换为一个list对象
+        List<String> expect_options= Arrays.asList((new String[]{"桃子","西瓜","橘子","猕猴桃","山楂","荔枝"}));
+        //声明一个新list对象，用于存取从页面上获取的所有选项文字
+        List<String> actual_options=new ArrayList<String>();
+        //dropList.getOptions方法用去获取页面上下拉列表中所有选项对象，
+        // actual_options.add方法用户将实际打开页面中的每个选项添加到actual_options列表中
+        for (WebElement option:dropList.getOptions()){
+            actual_options.add(option.getText());
+        }
+        //断言期望对象和实际对象的数组值是否完全一致
+        Assert.assertEquals(expect_options.toArray(),actual_options.toArray());
 
     }
 
