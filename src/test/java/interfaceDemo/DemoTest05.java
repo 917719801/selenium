@@ -8,9 +8,6 @@ import org.junit.jupiter.api.*;
 import task.evnTask;
 import wecht.FakeUtils;
 
-import java.util.ArrayList;
-
-import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 /*
 部门相关接口测试
@@ -22,8 +19,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 5.对脚本进行了分层，减少了重复代码，减少了维护成本
  */
 
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)//添加用例执行顺序
-public class DemoTest04 {
+
+public class DemoTest05 {
     static String accessToken;
     static String deparmentid;
 
@@ -41,7 +38,6 @@ public class DemoTest04 {
 
     @Test
     @Description("创建部门")
-    @Order(1)
     void creatDepartment() {
         String creatname = "creatname" + FakeUtils.gettimeStamp();
         String creatname_en = "creatname_en" + FakeUtils.gettimeStamp();
@@ -49,10 +45,27 @@ public class DemoTest04 {
         deparmentid = creatresponse.path("id") != null ? creatresponse.path("id").toString() : null;
         assertEquals("0", creatresponse.path("errcode").toString());
     }
+    @Test
+    @Description("创建部门32位")
+    void creatDepartment32() {
+        String creatname = "abcdefghijabcdefghijabcdefghij12";
+        String creatname_en = "creatname_en" + FakeUtils.gettimeStamp();
+        Response creatresponse = DepartmentApiobject.cratDepartment(creatname, creatname_en, accessToken);
+        deparmentid = creatresponse.path("id") != null ? creatresponse.path("id").toString() : null;
+        assertEquals("0", creatresponse.path("errcode").toString());
+    }
+    @Test
+    @Description("创建部门33位")
+    void creatDepartment33() {
+        String creatname = "abcdefghijabcdefghijabcdefghij123";
+        String creatname_en = "creatname_en" + FakeUtils.gettimeStamp();
+        Response creatresponse = DepartmentApiobject.cratDepartment(creatname, creatname_en, accessToken);
+        deparmentid = creatresponse.path("id") != null ? creatresponse.path("id").toString() : null;
+        assertEquals("60001", creatresponse.path("errcode").toString());
+    }
 
     @Test
     @Description("更新部门")
-    @Order(2)
     void updateDepartment() {
         Response creatresponse = DepartmentApiobject.cratDepartment(accessToken);
         deparmentid = creatresponse.path("id") != null ? creatresponse.path("id").toString() : null;
@@ -65,7 +78,6 @@ public class DemoTest04 {
 
     @Test
     @Description("查询部门")
-    @Order(3)
     void listDepartment() {
         Response creatresponse = DepartmentApiobject.cratDepartment(accessToken);
         deparmentid = creatresponse.path("id") != null ? creatresponse.path("id").toString() : null;
@@ -75,7 +87,6 @@ public class DemoTest04 {
 
     @Test
     @Description("删除部门")
-    @Order(4)
     void deletDepartment() {
         Response creatresponse = DepartmentApiobject.cratDepartment(accessToken);
         deparmentid = creatresponse.path("id") != null ? creatresponse.path("id").toString() : null;

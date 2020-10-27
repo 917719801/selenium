@@ -4,13 +4,15 @@ import apiobject.DepartmentApiobject;
 import apiobject.TokenHelper;
 import com.sun.org.glassfish.gmbal.Description;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 import task.evnTask;
 import wecht.FakeUtils;
 
-import java.util.ArrayList;
-
-import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 /*
 部门相关接口测试
@@ -20,10 +22,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 3.使用时间戳命名法避免数据重复
 4.通过添加evnclear方法解决脚本无法重复运行的问题
 5.对脚本进行了分层，减少了重复代码，减少了维护成本
+6.使用数据驱动的方式将入参数据从代码中剥离
  */
 
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)//添加用例执行顺序
-public class DemoTest04 {
+
+public class DemoTest05_01 {
     static String accessToken;
     static String deparmentid;
 
@@ -38,21 +41,19 @@ public class DemoTest04 {
         evnTask.evnClear(accessToken);
 
     }
-
-    @Test
+    //数据驱动从csv文件中获取文件名和相应错误码
+    @CsvFileSource(resources = "/createDepartment.csv",numLinesToSkip = 1)
+    @ParameterizedTest
     @Description("创建部门")
-    @Order(1)
-    void creatDepartment() {
-        String creatname = "creatname" + FakeUtils.gettimeStamp();
-        String creatname_en = "creatname_en" + FakeUtils.gettimeStamp();
+    void creatDepartment(String creatname,String creatname_en,String returncode) {
+
         Response creatresponse = DepartmentApiobject.cratDepartment(creatname, creatname_en, accessToken);
         deparmentid = creatresponse.path("id") != null ? creatresponse.path("id").toString() : null;
-        assertEquals("0", creatresponse.path("errcode").toString());
+        assertEquals(returncode, creatresponse.path("errcode").toString());
     }
 
     @Test
     @Description("更新部门")
-    @Order(2)
     void updateDepartment() {
         Response creatresponse = DepartmentApiobject.cratDepartment(accessToken);
         deparmentid = creatresponse.path("id") != null ? creatresponse.path("id").toString() : null;
@@ -65,7 +66,6 @@ public class DemoTest04 {
 
     @Test
     @Description("查询部门")
-    @Order(3)
     void listDepartment() {
         Response creatresponse = DepartmentApiobject.cratDepartment(accessToken);
         deparmentid = creatresponse.path("id") != null ? creatresponse.path("id").toString() : null;
@@ -75,7 +75,6 @@ public class DemoTest04 {
 
     @Test
     @Description("删除部门")
-    @Order(4)
     void deletDepartment() {
         Response creatresponse = DepartmentApiobject.cratDepartment(accessToken);
         deparmentid = creatresponse.path("id") != null ? creatresponse.path("id").toString() : null;
