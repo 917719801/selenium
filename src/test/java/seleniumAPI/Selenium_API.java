@@ -220,9 +220,35 @@ public class Selenium_API {
         dropList.deselectByIndex(3);
         dropList.deselectByValue("shanzha");
         dropList.deselectByVisibleText("山楂");
-
-
     }
+    @Test
+    void operateRadio(){
+        driver.get("E:\\ideawork\\selenium\\bin\\radio.html");
+        //查找属性为“Berry”的单选按钮对象
+        WebElement radioOption=driver.findElement(By.xpath("//input[@value='berry']"));
+//        //判断次单选按钮是否处于未选中状态，未选中则调用click方法选中次单选按钮
+        if (!radioOption.isSelected()) {
+            radioOption.click();
+        }
+//        //断言属性为“berry”的单选按钮是否处于选中状态
+            Assert.assertTrue(radioOption.isSelected());
+        //查找name属性值为“fruit”的所有单选按钮对象，并存储到一个list容器中
+            List<WebElement> fruits=driver.findElements(By.name("fruit"));
+            //使用for循环将list容器中的按钮遍历一遍，查找value值为“watermelon”的按钮，如果查找到该按钮未处于选中状态则调用click方法进行点击
+            for (WebElement fruit:fruits){
+                if (fruit.getAttribute("value").equals("watermelon")){
+                    if (!fruit.isSelected()){
+                        fruit.click();
+                        //断言是否选中
+                        Assert.assertTrue(fruit.isSelected());
+                        break;
+                    }
+                }
+
+
+            }
+        }
+
 
 
     @AfterAll
