@@ -199,6 +199,30 @@ public class Selenium_API {
         Assert.assertEquals(expect_options.toArray(),actual_options.toArray());
 
     }
+    @Test
+    void operateMultipleOptionDropList(){
+        driver.get("E:\\ideawork\\selenium\\bin\\multiple.html");
+        //获取下拉列表元素
+        Select dropList=new Select(driver.findElement(By.name("fruit")));
+        //判断下拉列表是否支持多选
+        Assert.assertTrue(dropList.isMultiple());
+        //选择对应选项
+        dropList.selectByIndex(3);
+        dropList.selectByValue("shanzha");
+        dropList.selectByVisibleText("荔枝");
+        //取消所有选项的选中状态
+        dropList.deselectAll();
+        //依次点击
+        dropList.selectByIndex(3);
+        dropList.selectByValue("shanzha");
+        dropList.selectByVisibleText("荔枝");
+        //依次取消
+        dropList.deselectByIndex(3);
+        dropList.deselectByValue("shanzha");
+        dropList.deselectByVisibleText("山楂");
+
+
+    }
 
 
     @AfterAll
