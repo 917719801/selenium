@@ -244,9 +244,25 @@ public class Selenium_API {
                         break;
                     }
                 }
-
-
             }
+        }
+        @Test
+        void operateCheckBox(){
+        driver.get("E:\\ideawork\\selenium\\bin\\checkbox.html");
+        WebElement orangeCheckbox=driver.findElement(By.xpath("//input[@value='berry']"));
+        if (!orangeCheckbox.isSelected()){
+            orangeCheckbox.click();
+        }
+        Assert.assertTrue(orangeCheckbox.isSelected());
+        if (orangeCheckbox.isSelected()){
+            orangeCheckbox.click();
+        }
+        Assert.assertFalse(orangeCheckbox.isSelected());
+        List<WebElement> checkboxs= driver.findElements(By.name("fruit"));
+        //遍历list容器中的所有复选框元素，调用click方法点击复选框，让全部复选框处于选中状态
+        for (WebElement checkbox:checkboxs){
+            checkbox.click();
+        }
         }
 
 
