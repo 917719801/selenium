@@ -160,50 +160,53 @@ public class Selenium_API {
             e.printStackTrace();
         }
     }
+
     @Test
-    void operateDropList(){
+    void operateDropList() {
         driver.get("E:\\ideawork\\selenium\\bin\\droplist.html");
         //使用name属性找到页面上name属性为fruit的下拉列表元素
-        Select dropList=new Select(driver.findElement(By.name("fruit")));
+        Select dropList = new Select(driver.findElement(By.name("fruit")));
         //ismultiple标识下拉列表是否允许多选，被页面是一个单选下拉列表，所以此函数返回结果实false
         Assert.assertFalse(dropList.isMultiple());
         //getFirstSelectedOption().getText()方法表示获取当前被选中的下拉列表选项文本
         //断言当前选中的选项文本是否是桃子
-        Assert.assertEquals("桃子",dropList.getFirstSelectedOption().getText());
+        Assert.assertEquals("桃子", dropList.getFirstSelectedOption().getText());
         //selectByIndex方法表示选中下拉列表的第四个选项，即猕猴桃选项
         dropList.selectByIndex(3);
-        Assert.assertEquals("猕猴桃",dropList.getFirstSelectedOption().getText());
-       //selectByValue方法表示使用下拉列表选项的value属性进行操作，“shanzha"是选项的属性值
+        Assert.assertEquals("猕猴桃", dropList.getFirstSelectedOption().getText());
+        //selectByValue方法表示使用下拉列表选项的value属性进行操作，“shanzha"是选项的属性值
         dropList.selectByValue("shanzha");
-        Assert.assertEquals("山楂",dropList.getFirstSelectedOption().getText());
+        Assert.assertEquals("山楂", dropList.getFirstSelectedOption().getText());
         //selectByVisibleText方法表示通过选项的文字进行选中
         dropList.selectByVisibleText("荔枝");
-        Assert.assertEquals("荔枝",dropList.getFirstSelectedOption().getText());
+        Assert.assertEquals("荔枝", dropList.getFirstSelectedOption().getText());
 
     }
+
     @Test
-    void checkSelectText(){
+    void checkSelectText() {
         driver.get("E:\\ideawork\\selenium\\bin\\droplist.html");
-        Select dropList=new Select(driver.findElement(By.name("fruit")));
+        Select dropList = new Select(driver.findElement(By.name("fruit")));
         //声明一个list对象存储下拉列表中有期望出现的选项文字，并通过泛型<String>限定list
         //对象中的存储对象类型是String，Arrays。asList表示将一个数组转换为一个list对象
-        List<String> expect_options= Arrays.asList((new String[]{"桃子","西瓜","橘子","猕猴桃","山楂","荔枝"}));
+        List<String> expect_options = Arrays.asList((new String[]{"桃子", "西瓜", "橘子", "猕猴桃", "山楂", "荔枝"}));
         //声明一个新list对象，用于存取从页面上获取的所有选项文字
-        List<String> actual_options=new ArrayList<String>();
+        List<String> actual_options = new ArrayList<String>();
         //dropList.getOptions方法用去获取页面上下拉列表中所有选项对象，
         // actual_options.add方法用户将实际打开页面中的每个选项添加到actual_options列表中
-        for (WebElement option:dropList.getOptions()){
+        for (WebElement option : dropList.getOptions()) {
             actual_options.add(option.getText());
         }
         //断言期望对象和实际对象的数组值是否完全一致
-        Assert.assertEquals(expect_options.toArray(),actual_options.toArray());
+        Assert.assertEquals(expect_options.toArray(), actual_options.toArray());
 
     }
+
     @Test
-    void operateMultipleOptionDropList(){
+    void operateMultipleOptionDropList() {
         driver.get("E:\\ideawork\\selenium\\bin\\multiple.html");
         //获取下拉列表元素
-        Select dropList=new Select(driver.findElement(By.name("fruit")));
+        Select dropList = new Select(driver.findElement(By.name("fruit")));
         //判断下拉列表是否支持多选
         Assert.assertTrue(dropList.isMultiple());
         //选择对应选项
@@ -221,66 +224,85 @@ public class Selenium_API {
         dropList.deselectByValue("shanzha");
         dropList.deselectByVisibleText("山楂");
     }
+
     @Test
-    void operateRadio(){
+    void operateRadio() {
         driver.get("E:\\ideawork\\selenium\\bin\\radio.html");
         //查找属性为“Berry”的单选按钮对象
-        WebElement radioOption=driver.findElement(By.xpath("//input[@value='berry']"));
+        WebElement radioOption = driver.findElement(By.xpath("//input[@value='berry']"));
 //        //判断次单选按钮是否处于未选中状态，未选中则调用click方法选中次单选按钮
         if (!radioOption.isSelected()) {
             radioOption.click();
         }
 //        //断言属性为“berry”的单选按钮是否处于选中状态
-            Assert.assertTrue(radioOption.isSelected());
+        Assert.assertTrue(radioOption.isSelected());
         //查找name属性值为“fruit”的所有单选按钮对象，并存储到一个list容器中
-            List<WebElement> fruits=driver.findElements(By.name("fruit"));
-            //使用for循环将list容器中的按钮遍历一遍，查找value值为“watermelon”的按钮，如果查找到该按钮未处于选中状态则调用click方法进行点击
-            for (WebElement fruit:fruits){
-                if (fruit.getAttribute("value").equals("watermelon")){
-                    if (!fruit.isSelected()){
-                        fruit.click();
-                        //断言是否选中
-                        Assert.assertTrue(fruit.isSelected());
-                        break;
-                    }
+        List<WebElement> fruits = driver.findElements(By.name("fruit"));
+        //使用for循环将list容器中的按钮遍历一遍，查找value值为“watermelon”的按钮，如果查找到该按钮未处于选中状态则调用click方法进行点击
+        for (WebElement fruit : fruits) {
+            if (fruit.getAttribute("value").equals("watermelon")) {
+                if (!fruit.isSelected()) {
+                    fruit.click();
+                    //断言是否选中
+                    Assert.assertTrue(fruit.isSelected());
+                    break;
                 }
             }
         }
-        @Test
-        void operateCheckBox(){
+    }
+
+    @Test
+    void operateCheckBox() {
         driver.get("E:\\ideawork\\selenium\\bin\\checkbox.html");
-        WebElement orangeCheckbox=driver.findElement(By.xpath("//input[@value='berry']"));
-        if (!orangeCheckbox.isSelected()){
+        WebElement orangeCheckbox = driver.findElement(By.xpath("//input[@value='berry']"));
+        if (!orangeCheckbox.isSelected()) {
             orangeCheckbox.click();
         }
         Assert.assertTrue(orangeCheckbox.isSelected());
-        if (orangeCheckbox.isSelected()){
+        if (orangeCheckbox.isSelected()) {
             orangeCheckbox.click();
         }
         Assert.assertFalse(orangeCheckbox.isSelected());
-        List<WebElement> checkboxs= driver.findElements(By.name("fruit"));
+        List<WebElement> checkboxs = driver.findElements(By.name("fruit"));
         //遍历list容器中的所有复选框元素，调用click方法点击复选框，让全部复选框处于选中状态
-        for (WebElement checkbox:checkboxs){
+        for (WebElement checkbox : checkboxs) {
             checkbox.click();
         }
-        }
-        @Test
-        void isElementTextPresent(){
+    }
+
+    @Test
+    void isElementTextPresent() {
         driver.get("E:\\ideawork\\selenium\\bin\\elementtext.html");
         //使用xpath找到第一个p元素
-        WebElement text= driver.findElement(By.xpath("//p[1]"));
+        WebElement text = driver.findElement(By.xpath("//p[1]"));
         //获取p元素标签的文字内容
-        String contentText=text.getText();
+        String contentText = text.getText();
         //判断p标签的文字内容是否与期望值一致
-        Assert.assertEquals("《光荣之路》",contentText);
+        Assert.assertEquals("《光荣之路》", contentText);
         //判断p标签的文字内容是否包含”光荣之路“
         Assert.assertTrue(contentText.contains("光荣之路"));
         //判断p标签文字内容是否以“《光荣”开头
         Assert.assertTrue(contentText.startsWith("《光荣"));
         //判断p标签文字内容是否以"之路》"结尾
         Assert.assertTrue(contentText.endsWith("之路》"));
-        }
+    }
 
+    @Test
+    void executeJavaScript() {
+        driver.get(baseUrl);
+        //声明一个javaScript执行器对象
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        //调用executeScript方法执行JavaScript脚本return document.title
+        String title = (String) js.executeScript("return document.title");
+        Assert.assertEquals("搜狗搜索引擎 - 上网从搜狗开始", title);
+        //document.getElementById('stb')是JavaScript代码，表示获取页面的搜索按钮对象
+        //return button.value表示返回搜索按钮上的文字
+        String SerachButtonText=(String)js.executeScript("var button=document.getElementById('stb');return button.value");
+        System.out.println(SerachButtonText);
+
+
+
+    }
 
 
     @AfterAll
