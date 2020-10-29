@@ -264,6 +264,22 @@ public class Selenium_API {
             checkbox.click();
         }
         }
+        @Test
+        void isElementTextPresent(){
+        driver.get("E:\\ideawork\\selenium\\bin\\elementtext.html");
+        //使用xpath找到第一个p元素
+        WebElement text= driver.findElement(By.xpath("//p[1]"));
+        //获取p元素标签的文字内容
+        String contentText=text.getText();
+        //判断p标签的文字内容是否与期望值一致
+        Assert.assertEquals("《光荣之路》",contentText);
+        //判断p标签的文字内容是否包含”光荣之路“
+        Assert.assertTrue(contentText.contains("光荣之路"));
+        //判断p标签文字内容是否以“《光荣”开头
+        Assert.assertTrue(contentText.startsWith("《光荣"));
+        //判断p标签文字内容是否以"之路》"结尾
+        Assert.assertTrue(contentText.endsWith("之路》"));
+        }
 
 
 
