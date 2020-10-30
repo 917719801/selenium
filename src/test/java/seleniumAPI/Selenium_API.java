@@ -299,9 +299,23 @@ public class Selenium_API {
         //return button.value表示返回搜索按钮上的文字
         String SerachButtonText=(String)js.executeScript("var button=document.getElementById('stb');return button.value");
         System.out.println(SerachButtonText);
-
-
-
+    }
+    @Test
+    void dragpageElement(){
+        //需重新找网址
+        driver.get("http://jqueryui.com/resouces/demos/draggable/scroll.html");
+        //找到页面上第一个能被拖拽的方案页面对象
+        WebElement draggable=driver.findElement(By.id("braggable"));
+        //向下拖动10个像素，共拖动5次
+        for (int i =0;i<5;i++){
+            //10 表示元素的纵坐标向下移动10个像素，0表示元素的横坐标不变
+            new Actions(driver).dragAndDropBy(draggable,0,10).build().perform();
+        }
+        //向右拖动10个像素，共拖动5次
+        for (int i=0;i<5;i++){
+            //10表示元素的横向坐标向右移动10个像素，0表示元素的纵坐标不变
+            new Actions(driver).dragAndDropBy(draggable,10,0).build().perform();
+        }
     }
 
 
